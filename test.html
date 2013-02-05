@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <style>
+.added {
+  background-color: #9f9;
+}
+.removed {
+  background-color: #f99;
+  text-decoration: line-through;
+}
+.transient {
+  background-color: #ee8;
+  text-decoration: line-through;
+}
+
+    </style>
+
+    <script src="./underscore.js"></script>
+    <script src="./lib/changes.js"></script>
+
+    <script>
+var diff = new Changes()
+diff.addPart("hello there, how are you doing?", {author: "james", created_at: 1359956329, message: "initial commit" })
+diff.addPart("hello there, how are you doing today?", {author: "rupert", created_at: 1359958329, message: "added nicer message" })
+diff.addPart("hello there. how are you doing today?", {author: "sam", created_at: 1359968329, message: "more things" })
+    </script>
+
+  </head>
+  <body>
+    <pre id="code"></pre>
+    <script>
+    diff.render(function(part, type, from, to) {
+      var message = from.meta.message + " (" + from.meta.author + ") -> " + to.meta.message + " (" + to.meta.author + ")"
+      document.getElementById('code').innerHTML += "<span class="+type+" title="+JSON.stringify(message)+">"+part+"</span>"
+    })
+    </script>
+  </body>
+</html>
